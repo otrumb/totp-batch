@@ -2,11 +2,10 @@
 
 ## Reporting
 
-After source publication, report suspected vulnerabilities through GitHub private
-vulnerability reporting:
-<https://github.com/otrumb/totp-batch/security/advisories/new>. Until then, contact
-maintainer privately. Include version, OS, command shape, expected result, and
-observed result. Never submit real secrets, account labels, or generated codes.
+Report suspected vulnerabilities through GitHub private vulnerability reporting:
+<https://github.com/otrumb/totp-batch/security/advisories/new>. Include version, OS,
+command shape, expected result, and observed result. Never submit real secrets,
+account labels, or generated codes.
 
 ## Secret handling
 
