@@ -1,0 +1,106 @@
+[build-system]
+requires = ["hatchling>=1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "totp-batch"
+version = "0.1.0"
+description = "Offline TOTP generation for one secret or a validated batch"
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "otrumb" }]
+keywords = ["cli", "offline", "security", "totp", "utility", "windows", "linux"]
+classifiers = [
+    "Environment :: Console",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Security :: Cryptography",
+    "Topic :: Utilities",
+]
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+totp-batch = "totp_batch.cli:main"
+
+[project.urls]
+Repository = "https://github.com/otrumb/totp-batch"
+Issues = "https://github.com/otrumb/totp-batch/issues"
+
+[dependency-groups]
+dev = [
+    "basedpyright>=1.31",
+    "build>=1.3",
+    "hatchling>=1.27",
+    "pytest>=8.4",
+    "ruff>=0.13",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/totp_batch"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/.gitattributes",
+    "/.github/workflows/ci.yml",
+    "/.gitignore",
+    "/.python-version",
+    "/CHANGELOG.md",
+    "/LICENSE",
+    "/PROVENANCE.md",
+    "/README.md",
+    "/SECURITY.md",
+    "/pyproject.toml",
+    "/src/totp_batch",
+    "/tests",
+    "/uv.lock",
+]
+
+[tool.basedpyright]
+typeCheckingMode = "all"
+pythonVersion = "3.12"
+pythonPlatform = "All"
+include = ["src", "tests"]
+exclude = ["**/__pycache__", "**/.venv", "**/build", "**/dist"]
+reportUnusedCallResult = "warning"
+reportUnnecessaryTypeIgnoreComment = "error"
+reportUnusedVariable = "error"
+reportMissingParameterType = "error"
+reportPrivateUsage = "error"
+reportAny = "error"
+reportExplicitAny = "error"
+reportIgnoreCommentWithoutRule = "error"
+reportImportCycles = "error"
+reportMissingSuperCall = "error"
+reportUninitializedInstanceVariable = "error"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["COM812", "ISC001", "D203", "D213", "CPY001"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/totp_batch/**/*.py" = ["D"]
+"tests/**/*.py" = ["S101", "S603", "ARG", "PLR2004", "SLF001", "D"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.format]
+line-ending = "lf"
+quote-style = "double"
+indent-style = "space"
+docstring-code-format = true
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+addopts = ["-ra", "--strict-config", "--strict-markers"]
+filterwarnings = ["error"]
