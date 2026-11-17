@@ -8,6 +8,43 @@ batch. Runtime uses Python standard library only.
 Source target: <https://github.com/otrumb/totp-batch>. No PyPI package, package
 publication, tag, or release exists or is authorized.
 
+## First use from a source checkout
+
+Install Git, Python 3.12 or newer, and [uv](https://docs.astral.sh/uv/), then run:
+
+```console
+git clone https://github.com/otrumb/totp-batch.git
+cd totp-batch
+uv sync --locked --all-groups
+uv run totp-batch --help
+```
+
+Run `uv run` commands from the checkout directory. For normal use, run
+`uv run totp-batch` in an interactive terminal and enter one Base32 secret at the
+hidden prompt. Default input is hidden; `--stdin` explicitly requires a pipe or
+redirection. Hidden input prevents echo, but the resulting code is displayed.
+
+These executable PowerShell examples use only the public RFC 6238 SHA1 test secret
+(`12345678901234567890` encoded as Base32). Never enroll this public secret in a
+real account. The first command prints one six-digit code; the second prints JSON
+for one record with every supported input field specified:
+
+```powershell
+'GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ' | uv run totp-batch --stdin
+'{"label":"rfc-demo","secret":"GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ","algorithm":"SHA1","digits":8,"period":30}' | uv run totp-batch --stdin --json
+```
+
+Do not replace the public secret in these shell commands with a real secret:
+literal stdin producers can leave secrets in shell history, scripts, or logs.
+Output consumers, redirection, and terminal scrollback can retain codes. Do not
+copy current codes into reports. Complete synthetic JSON output shape follows;
+the code is a placeholder and times illustrate Unix second 59, not a clock option
+or the current output:
+
+```json
+{"schema":"totp-batch/output/v1","codes":[{"label":"rfc-demo","code":"<GENERATED_CODE>","generated_at":59,"window_start":30,"window_end":60}]}
+```
+
 ## Usage
 
 ```console
